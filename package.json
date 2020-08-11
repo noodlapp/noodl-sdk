@@ -1,0 +1,11 @@
+{
+  "name": "noodl-sdk",
+  "version": "0.1.0",
+  "description": "The noodl js sdk for creating modules",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
