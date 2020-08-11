@@ -2,10 +2,10 @@ Noodl.defineNode = function(def) {
     const _def = {};
     const _outputs = {};
 
-    _def.name = def.package + '-' + def.name;
+    _def.name = def.category?(def.category + '-' + def.name):def.name;
     _def.displayNodeName = def.displayNodeName || def.name;
     _def.color = def.color || 'default';
-    _def.category = def.category || def.package || 'Modules';
+    _def.category = def.category || 'Modules';
     _def.initialize = function() {
         this.inputs = {};
         var _this = this;
@@ -76,7 +76,7 @@ Noodl.defineNode = function(def) {
 Noodl.defineCollectionNode = function(def) {
     const _def = {
         name:def.name,
-        package:def.package,
+        category:def.category,
         color:'data',
         inputs:def.inputs,
         outputs:Object.assign({
@@ -104,7 +104,7 @@ Noodl.defineCollectionNode = function(def) {
 Noodl.defineModelNode = function(def) {
     const _def = {
         name:def.name,
-        package:def.package,
+        category:def.category,
         color:'data',
         inputs:{
             Id:'string'
