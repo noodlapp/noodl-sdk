@@ -2,8 +2,8 @@ Noodl.defineNode = function(def) {
     const _def = {};
     const _outputs = {};
 
-    _def.name = def.category?(def.category + '-' + def.name):def.name;
-    _def.displayNodeName = def.displayNodeName || def.name;
+    _def.name = def.name;
+    _def.displayNodeName = def.displayName;
     _def.color = def.color || 'default';
     _def.category = def.category || 'Modules';
     _def.initialize = function() {
