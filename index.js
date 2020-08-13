@@ -65,7 +65,7 @@ Noodl.defineNode = function(def) {
         }
     }
 
-    _def.prototypeExtensions = {};
+    _def.methods = _def.prototypeExtensions = {};
     for(var key in def.methods) {
         _def.prototypeExtensions[key] = def.methods[key];
     }
@@ -144,6 +144,18 @@ Noodl.defineModelNode = function(def) {
     }
  
     return Noodl.defineNode(_def);
+}
+
+Noodl.defineReactNode = function(def) {
+    var _def = Noodl.defineNode(def);
+
+    _def.node.getReactComponent = def.getReactComponent;
+    _def.node.inputProps = def.inputProps;
+    _def.node.inputCss = def.inputCss;
+    _def.node.outputProps = def.outputProps;
+    _def.node.setup = def.setup;
+
+    return _def.node;
 }
 
 module.exports = Noodl;
