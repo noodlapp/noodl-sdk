@@ -1,10 +1,18 @@
+const _colors = {
+    "purple":"component",
+    "green":"data",
+    "default":"default",
+    "grey":"default"
+}
+
 Noodl.defineNode = function(def) {
     const _def = {};
     const _outputs = {};
 
     _def.name = def.name;
     _def.displayNodeName = def.displayName;
-    _def.color = def.color || 'default';
+    _def.usePortAsLabel = def.useInputAsLabel;
+    _def.color = _colors[def.color || 'default'];
     _def.category = def.category || 'Modules';
     _def.initialize = function() {
         this.inputs = {};
@@ -57,7 +65,9 @@ Noodl.defineNode = function(def) {
         }
         else {
             _def.outputs[key] = {
-                type:def.outputs[key],
+                type:(typeof def.outputs[key] === 'object')?def.outputs[key].type:def.outputs[key],
+                displayName:(typeof def.outputs[key] === 'object')?def.outputs[key].displayName:undefined,
+                group:(typeof def.outputs[key] === 'object')?def.outputs[key].group:undefined,
                 getter:(function(_key) {
                     return _outputs[_key];
                 }).bind(this,key)
@@ -68,6 +78,12 @@ Noodl.defineNode = function(def) {
     _def.methods = _def.prototypeExtensions = {};
     for(var key in def.methods) {
         _def.prototypeExtensions[key] = def.methods[key];
+    }
+    if(_def.methods.onNodeDeleted) { // Override the onNodeDeleted if required
+        _def.methods._onNodeDeleted = function() {
+            this.__proto__.__proto__._onNodeDeleted.call(this);
+            _def.methods.onNodeDeleted.value.call(this);
+        }
     }
 
     return {node:_def,setup:def.setup};
