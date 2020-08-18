@@ -47,10 +47,12 @@ Noodl.defineNode = function(def) {
     for(var key in def.signals) {
         _def.inputs[key] = {
             type:'signal',
+            displayName:(typeof def.signals[key] === 'object')?def.signals[key].displayName:undefined,
             valueChangedToTrue:(function() { const _key = key; return function() {
-                if(typeof def.signals[_key] === 'function') {
+                const _fn = (typeof def.signals[_key] === 'object')?def.signals[_key].signal:def.signals[_key]
+                if(typeof _fn === 'function') {
                     this.scheduleAfterInputsHaveUpdated(() => {
-                        def.signals[_key].apply(this);
+                        _fn.apply(this);
                     }) 
                 }
             }})()
