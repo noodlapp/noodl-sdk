@@ -7,7 +7,6 @@ const _colors = {
 
 Noodl.defineNode = function(def) {
     const _def = {};
-    const _outputs = {};
 
     _def.name = def.name;
     _def.displayNodeName = def.displayName;
@@ -16,6 +15,7 @@ Noodl.defineNode = function(def) {
     _def.category = def.category || 'Modules';
     _def.initialize = function() {
         this.inputs = {};
+        var _outputs = this.outputs = {};
         var _this = this;
         this.setOutputs = function(o) {
             for(var key in o) {
@@ -70,9 +70,9 @@ Noodl.defineNode = function(def) {
                 type:(typeof def.outputs[key] === 'object')?def.outputs[key].type:def.outputs[key],
                 displayName:(typeof def.outputs[key] === 'object')?def.outputs[key].displayName:undefined,
                 group:(typeof def.outputs[key] === 'object')?def.outputs[key].group:undefined,
-                getter:(function(_key) {
-                    return _outputs[_key];
-                }).bind(this,key)
+                getter:(function() { const _key = key; return function() {
+                    return this.outputs[_key];
+                }})()
             }
         }
     }
