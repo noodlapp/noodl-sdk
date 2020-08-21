@@ -17,12 +17,28 @@ Noodl.defineNode = function(def) {
         this.inputs = {};
         var _outputs = this.outputs = {};
         var _this = this;
+
+        // Function for quickly setting outputs
         this.setOutputs = function(o) {
             for(var key in o) {
                 _outputs[key] = o[key];
                 _this.flagOutputDirty(key);
             }
         }
+
+        // Sending warnings
+        this.clearWarnings = (function() {
+            if(this.context.editorConnection && this.nodeScope && this.nodeScope.componentOwner)
+                this.context.editorConnection.clearWarnings(this.nodeScope.componentOwner.name, this.id);
+        }).bind(this);
+
+        this.sendWarning = (function(name,message) {
+            if(this.context.editorConnection && this.nodeScope && this.nodeScope.componentOwner)
+                this.context.editorConnection.sendWarning(this.nodeScope.componentOwner.name, this.id, name, {
+                    message: message
+                });
+        }).bind(this);
+
         if(typeof def.initialize === 'function')
             def.initialize.apply(this);
     }
