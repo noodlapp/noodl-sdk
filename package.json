@@ -1,6 +1,6 @@
 {
   "name": "@noodl/noodl-sdk",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "The noodl js sdk for creating modules",
   "main": "index.js",
   "scripts": {
