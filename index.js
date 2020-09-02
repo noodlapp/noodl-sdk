@@ -64,6 +64,7 @@ Noodl.defineNode = function(def) {
         _def.inputs[key] = {
             type:'signal',
             displayName:(typeof def.signals[key] === 'object')?def.signals[key].displayName:undefined,
+            group:(typeof def.signals[key] === 'object')?def.signals[key].group:undefined,
             valueChangedToTrue:(function() { const _key = key; return function() {
                 const _fn = (typeof def.signals[_key] === 'object')?def.signals[_key].signal:def.signals[_key]
                 if(typeof _fn === 'function') {
