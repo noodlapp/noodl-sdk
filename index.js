@@ -13,6 +13,8 @@ Noodl.defineNode = function(def) {
     _def.usePortAsLabel = def.useInputAsLabel;
     _def.color = _colors[def.color || 'default'];
     _def.category = def.category || 'Modules';
+    _def.getInspectInfo = def.getInspectInfo;
+
     _def.initialize = function() {
         this.inputs = {};
         var _outputs = this.outputs = {};
