@@ -13,6 +13,8 @@ Noodl.defineNode = function(def) {
     _def.usePortAsLabel = def.useInputAsLabel;
     _def.color = _colors[def.color || 'default'];
     _def.category = def.category || 'Modules';
+    _def.getInspectInfo = def.getInspectInfo;
+
     _def.initialize = function() {
         this.inputs = {};
         var _outputs = this.outputs = {};
@@ -64,6 +66,7 @@ Noodl.defineNode = function(def) {
         _def.inputs[key] = {
             type:'signal',
             displayName:(typeof def.signals[key] === 'object')?def.signals[key].displayName:undefined,
+            group:(typeof def.signals[key] === 'object')?def.signals[key].group:undefined,
             valueChangedToTrue:(function() { const _key = key; return function() {
                 const _fn = (typeof def.signals[_key] === 'object')?def.signals[_key].signal:def.signals[_key]
                 if(typeof _fn === 'function') {
