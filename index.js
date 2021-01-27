@@ -188,6 +188,7 @@ Noodl.defineReactNode = function(def) {
     _def.node.inputCss = def.inputCss;
     _def.node.outputProps = def.outputProps;
     _def.node.setup = def.setup;
+    _def.node.frame = def.frame;
 
     return _def.node;
 }
