@@ -14,7 +14,8 @@ Noodl.defineNode = function(def) {
     _def.color = _colors[def.color || 'default'];
     _def.category = def.category || 'Modules';
     _def.getInspectInfo = def.getInspectInfo;
-
+    _def.docs = def.docs;
+    
     _def.initialize = function() {
         this.inputs = {};
         var _outputs = this.outputs = {};
