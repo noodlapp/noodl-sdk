@@ -74,7 +74,7 @@ export type NodeDefinition<TInstance = {}> = {
   color?: Color;
 
   /** Sets the category. */
-  category?: string;
+  category?: 'Visual' | 'Data' | 'Utilities' | 'Logic' | string;
 
   allowChildren?: boolean;
   allowChildrenWithCategory?: string[];
