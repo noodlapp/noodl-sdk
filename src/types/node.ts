@@ -8,7 +8,7 @@ import { InternalNodeDefinition } from "../internal/common";
 export type NodeInput =
   | TypeNames
   | {
-      type: Type;
+      type: Type | TypeNames;
       displayName?: string;
       group?: string;
       default?: any;
@@ -19,7 +19,7 @@ export type NodeInput =
 export type NodeOutput =
   | TypeNames
   | {
-      type: Type;
+      type: Type | TypeNames;
       displayName?: string;
       group?: string;
     };
