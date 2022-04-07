@@ -4,6 +4,41 @@ import { TSFixme } from "../global";
 import { NodeInstance } from "./node-instance";
 import { InternalNodeDefinition } from "../internal/common";
 
+/**
+ * @privateRemarks
+ * When the type is for example "enum".
+ * 
+ * Then we can pass an object with the enum keys,
+ * right now I don't see a good use for this.
+ *
+ * ```js
+ * {
+ *    enumKey1: Tooltip,
+ *    enumKey2: Tooltip
+ * }
+ * ```
+ */
+export interface Tooltip {
+  /** Plain text description */
+  standard?: string;
+
+  /**
+   * HTML description as string.
+   * 
+   * @example
+   * ```html
+   * <div class="popup-layer-image-row">
+   *   <h3>My Tooltip</h3>
+   *   <div class="popup-layer-image-item">
+   *     <img src="./path-to-image.png" />
+   *     <h3>My Image</h3>
+   *   </div>
+   * </div>
+   * ```
+   */
+  extended?: string;
+}
+
 /** Defines a input defined on a node. */
 export type NodeInput =
   | TypeNames
@@ -11,7 +46,11 @@ export type NodeInput =
       type: Type | TypeNames;
       displayName?: string;
       group?: string;
-      default?: any;
+      default?: unknown;
+      
+      /** Tooltip. */
+      tooltip?: Tooltip;
+
       set?: (this: NodeInstance, value: unknown) => void;
     };
 
@@ -22,6 +61,9 @@ export type NodeOutput =
       type: Type | TypeNames;
       displayName?: string;
       group?: string;
+      
+      /** Tooltip. */
+      tooltip?: Tooltip;
     };
 
 /** Defines a signal defined on a node. */
@@ -119,23 +161,40 @@ export type ReactNodeDefinition<TInstance = {}> = NodeDefinition<TInstance> & {
   getReactComponent: () => (...args: any) => JSX.Element;
 
   inputProps?: {
+    /**
+     * 
+     */
     [key: string]: {
+      /** The order the property will be listed in the property panel. */
       index?: number;
+
+      /** Display name of the property. */
       displayName: string;
-      type: Type;
       group: string;
+
+      type: Type | TypeNames;
       default?: unknown;
+
+      /** Tooltip. */
+      tooltip?: Tooltip;
     };
   };
 
   inputCss?: {
     [key: string]: {
+      /** The order the property will be listed in the property panel. */
       index?: number;
+      
+      /** Display name of the property. */
       displayName: string;
+
       type: Type;
       group: string;
       default: unknown;
       applyDefault: boolean;
+
+      /** Tooltip. */
+      tooltip?: Tooltip;
 
       onChange: (value: unknown) => void;
     };
