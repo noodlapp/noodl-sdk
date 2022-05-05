@@ -1,4 +1,4 @@
-import { TypeNames, Type } from "./types";
+import { TypeNames, Type, TypeProperty } from "./types";
 import { Color } from "./color";
 import { TSFixme } from "../global";
 import { NodeInstance } from "./node-instance";
@@ -43,7 +43,7 @@ export interface Tooltip {
 export type NodeInput =
   | TypeNames
   | {
-      type: Type | TypeNames;
+      type: TypeProperty;
       displayName?: string;
       group?: string;
       default?: unknown;
@@ -58,7 +58,7 @@ export type NodeInput =
 export type NodeOutput =
   | TypeNames
   | {
-      type: Type | TypeNames;
+      type: TypeProperty;
       displayName?: string;
       group?: string;
       
@@ -172,7 +172,7 @@ export type ReactNodeDefinition<TInstance = {}> = NodeDefinition<TInstance> & {
       displayName: string;
       group: string;
 
-      type: Type | TypeNames;
+      type: TypeProperty;
       default?: unknown;
 
       /** Tooltip. */
