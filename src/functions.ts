@@ -136,6 +136,11 @@ export function defineReactNode<TInstance = {}>(
   internalDefinition.setup = def.setup;
   internalDefinition.frame = def.frame;
 
+  // @ts-expect-error
+  internalDefinition.dynamicports = def.dynamicports;
+  // @ts-expect-error
+  internalDefinition.visualStates = def.visualStates;
+
   return internalDefinition;
 }
 

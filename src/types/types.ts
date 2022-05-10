@@ -21,6 +21,9 @@ export interface StringListType extends BuiltInType {
 
 export interface NumberType extends BuiltInType {
   name: "number";
+  units?: string[];
+  defaultUnit?: string;
+  marginPaddingComp?: string;
 }
 
 export interface BooleanType extends BuiltInType {

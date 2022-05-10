@@ -1,13 +1,13 @@
 import { TypeNames, Type, TypeProperty } from "./types";
 import { Color } from "./color";
 import { TSFixme } from "../global";
-import { NodeInstance } from "./node-instance";
+import { NodeInstance, ReactNodeInstance } from "./node-instance";
 import { InternalNodeDefinition } from "../internal/common";
 
 /**
  * @privateRemarks
  * When the type is for example "enum".
- * 
+ *
  * Then we can pass an object with the enum keys,
  * right now I don't see a good use for this.
  *
@@ -24,7 +24,7 @@ export interface Tooltip {
 
   /**
    * HTML description as string.
-   * 
+   *
    * @example
    * ```html
    * <div class="popup-layer-image-row">
@@ -47,7 +47,7 @@ export type NodeInput =
       displayName?: string;
       group?: string;
       default?: unknown;
-      
+
       /** Tooltip. */
       tooltip?: Tooltip;
 
@@ -61,7 +61,7 @@ export type NodeOutput =
       type: TypeProperty;
       displayName?: string;
       group?: string;
-      
+
       /** Tooltip. */
       tooltip?: Tooltip;
     };
@@ -116,7 +116,7 @@ export type NodeDefinition<TInstance = {}> = {
   color?: Color;
 
   /** Sets the category. */
-  category?: 'Visual' | 'Data' | 'Utilities' | 'Logic' | string;
+  category?: "Visual" | "Data" | "Utilities" | "Logic" | string;
 
   allowChildren?: boolean;
   allowChildrenWithCategory?: string[];
@@ -160,9 +160,20 @@ export type NodeDefinition<TInstance = {}> = {
 export type ReactNodeDefinition<TInstance = {}> = NodeDefinition<TInstance> & {
   getReactComponent: () => (...args: any) => JSX.Element;
 
+  visualStates?: {
+    name: string;
+    label: string;
+  }[];
+
+  dynamicports?: {
+    name?: string;
+    condition: string;
+    inputs: string[];
+  }[];
+
   inputProps?: {
     /**
-     * 
+     *
      */
     [key: string]: {
       /** The order the property will be listed in the property panel. */
@@ -177,6 +188,11 @@ export type ReactNodeDefinition<TInstance = {}> = NodeDefinition<TInstance> & {
 
       /** Tooltip. */
       tooltip?: Tooltip;
+
+      /**
+       * default: false
+       */
+      allowVisualStates?: boolean;
     };
   };
 
@@ -184,26 +200,31 @@ export type ReactNodeDefinition<TInstance = {}> = NodeDefinition<TInstance> & {
     [key: string]: {
       /** The order the property will be listed in the property panel. */
       index?: number;
-      
+
       /** Display name of the property. */
       displayName: string;
 
-      type: Type;
+      type: TypeProperty;
       group: string;
-      default: unknown;
-      applyDefault: boolean;
+      default?: unknown;
+      applyDefault?: boolean;
 
       /** Tooltip. */
       tooltip?: Tooltip;
 
-      onChange: (value: unknown) => void;
+      /**
+       * default: false
+       */
+      allowVisualStates?: boolean;
+
+      onChange?: (value: unknown) => void;
     };
   };
 
   outputProps?: {
     [key: string]: {
       displayName: string;
-      type: Type;
+      type: TypeProperty;
       group: string;
     };
   };

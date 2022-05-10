@@ -1,7 +1,11 @@
 import { Proxy } from "./proxy";
 import { NodeScope } from "../internal/common";
 
-export type NodeInstance = {
+export interface ReactNodeInstance extends NodeInstance {
+  setVisualStates(states: ReadonlyArray<string>): void;
+}
+
+export interface NodeInstance {
   id: string;
   context: any;
   model: any;
