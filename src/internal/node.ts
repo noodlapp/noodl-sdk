@@ -26,9 +26,11 @@ function nodeMapInputs(def: NodeDefinition): {
           const _key = key;
           return function (value: unknown) {
             // @ts-ignore
+            const oldValue = this.inputs[_key];
+            // @ts-ignore
             this.inputs[_key] = value;
             if (def.changed && typeof def.changed[_key] === "function") {
-              def.changed[_key].apply(this, [value]);
+              def.changed[_key].apply(this, [value, oldValue]);
             }
           };
         })(),
@@ -43,9 +45,11 @@ function nodeMapInputs(def: NodeDefinition): {
           const _key = key;
           return function (value: unknown) {
             // @ts-ignore
+            const oldValue = this.inputs[_key];
+            // @ts-ignore
             this.inputs[_key] = value;
             if (def.changed && typeof def.changed[_key] === "function") {
-              def.changed[_key].apply(this, [value]);
+              def.changed[_key].apply(this, [value, oldValue]);
             }
           };
         })(),

@@ -58,10 +58,10 @@ export interface NodeInstance {
   hasOutput(t: any): boolean;
   getOutput(t: string): any;
 
-  connectInput(t: any, e: any, n: any): void;
-  removeInputConnection(t: any, e: any, n: any): void;
-  isInputConnected(t: any): boolean;
-  queueInput(t: any, e: any): void;
+  connectInput(inputName: any, sourceNode: any, sourcePortName: any): void;
+  removeInputConnection(inputName: any, sourceNodeId: any, sourcePortName: any): void;
+  isInputConnected(inputName: any): boolean;
+  queueInput(inputName: any, value: any): void;
 
   /**
    * Dispatch code after the inputs have been updated.

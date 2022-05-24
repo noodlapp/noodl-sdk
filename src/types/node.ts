@@ -154,6 +154,9 @@ export type NodeDefinition<TInstance = {}> = {
 
     /** Occurs when a node is deleted. */
     onNodeDeleted?: NodeMethod<TInstance>;
+
+    /** Don't override this */
+    update?: any;
   };
 };
 
